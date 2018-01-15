@@ -11,7 +11,7 @@ export class DbService {
     const url = 'http://139.159.212.154:88/StandardApiAction_getDeviceStatus.action?' +
       'jsession=' + jsession +
       '&vehiIdno=' + vehiIdno +
-      '&toMap=2';
+      '&toMap=2&geoaddress=1';
     return this.http.get(url);
   }
 

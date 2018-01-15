@@ -6,6 +6,7 @@ import {BaiduMapModule} from 'angular2-baidu-map';
 import {DbService} from './db.service';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule, Routes} from '@angular/router';
+import { SsPipe } from './pipe/ss.pipe';
 
 export const ROUTES: Routes = [
   {path: 's', component: AppComponent}
@@ -13,7 +14,8 @@ export const ROUTES: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SsPipe
   ],
   imports: [
     BrowserModule,
