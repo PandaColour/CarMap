@@ -1,0 +1,13 @@
+
+<div class="container">
+  <div class="col-md-10 col-md-offer-1">
+    <baidu-map *ngIf="options != null" [options]="options" (loaded)="onMapLoad($event)" (clicked)="onClickMap($event)" #baiduMap>
+      <marker *ngIf="point != null" [point]="point" (clicked)="onClickMarker($event)"></marker>
+      <control type="navigation" [options]="controlOpts"></control>
+      <control type="overviewmap" [options]="overviewmapOpts"></control>
+      <control type="scale" [options]="scaleOpts"></control>
+      <control type="maptype" [options]="mapTypeOpts"></control>
+    </baidu-map>
+  </div>
+</div>
+
