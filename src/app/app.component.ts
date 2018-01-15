@@ -23,12 +23,15 @@ export class AppComponent {
 
   jsession: string;
   vehildno: string;
+  mapHeight: string;
 
   constructor(private dbServer: DbService, private activatedRoute: ActivatedRoute) {
     this.point = null;
     this.options = null;
     this.jsession = null;
     this.vehildno = null;
+
+    this.mapHeight = (window.innerHeight - 20) + 'px';
 
     this.activatedRoute.queryParams.subscribe((params) => {
       this.jsession = params['jsession'];

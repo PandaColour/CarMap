@@ -1,7 +1,7 @@
 
 <div class="container">
   <div class="col-md-10 col-md-offer-1">
-    <baidu-map *ngIf="options != null" [options]="options" (loaded)="onMapLoad($event)" (clicked)="onClickMap($event)" #baiduMap>
+    <baidu-map *ngIf="options != null" [ngStyle]="{'height':  mapHeight}" [options]="options" (loaded)="onMapLoad($event)" (clicked)="onClickMap($event)" #baiduMap>
       <marker *ngIf="point != null" [point]="point" (clicked)="onClickMarker($event)"></marker>
       <control type="navigation" [options]="controlOpts"></control>
       <control type="overviewmap" [options]="overviewmapOpts"></control>
