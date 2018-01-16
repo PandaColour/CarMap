@@ -1,12 +1,15 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {
-  BaiduMapModule,
-  BMapInstance, ControlAnchor, MapOptions, MapTypeControlOptions, MapTypeControlType, NavigationControlOptions, NavigationControlType,
+  BMapInstance, ControlAnchor, MapOptions, MapTypeControlOptions, MapTypeControlType, MarkerOptions,
+  NavigationControlOptions, NavigationControlType,
   OverviewMapControlOptions, Point,
   ScaleControlOptions
 } from 'angular2-baidu-map';
 import {DbService} from './db.service';
 import {ActivatedRoute} from '@angular/router';
+import {BMap} from "angular2-baidu-map/dist/src/types/BMap";
+import {BLabel} from "angular2-baidu-map/dist/src/types/Label";
+import {BInfoWindowConstructor, BInfoWindowOptions} from "angular2-baidu-map/dist/src/types/InfoWindow";
 
 @Component({
   selector: 'app-root',
@@ -20,6 +23,7 @@ export class AppComponent {
   overviewmapOpts: OverviewMapControlOptions;
   scaleOpts: ScaleControlOptions;
   mapTypeOpts: MapTypeControlOptions;
+  markerOptions: MarkerOptions;
 
   jsession: string;
   vehildno: string;
@@ -35,6 +39,7 @@ export class AppComponent {
   s4: number;
 
   constructor(private dbServer: DbService, private activatedRoute: ActivatedRoute) {
+    this.markerOptions = null;
     this.mapHeight = (window.innerHeight - 20) + 'px';
     this.point = null;
     this.options = null;
@@ -63,6 +68,10 @@ export class AppComponent {
             this.point = {
               lat: this.mlat,
               lng: this.mlng
+            };
+
+            this.markerOptions = {
+              title: this.vehildno
             };
 
             this.options = {
@@ -105,7 +114,8 @@ export class AppComponent {
   }
 
   public onMapLoad(map: BMapInstance) {
-    console.log('map loaded', map);
+
+
   }
 
   public onClickMarker(e: any) {
@@ -113,4 +123,5 @@ export class AppComponent {
 
   public onClickMap(e: any) {
   }
+
 }

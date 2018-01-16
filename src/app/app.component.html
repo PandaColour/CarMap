@@ -1,6 +1,8 @@
 <div class="col-md-8 col-lg-8">
-  <baidu-map *ngIf="options != null" [ngStyle]="{'height':  mapHeight}" [options]="options" (loaded)="onMapLoad($event)" (clicked)="onClickMap($event)" #baiduMap>
-    <marker *ngIf="point != null" [point]="point" (clicked)="onClickMarker($event)"></marker>
+  <baidu-map *ngIf="options != null" [ngStyle]="{'height':  mapHeight}"
+             [options]="options" (loaded)="onMapLoad($event)"
+             (clicked)="onClickMap($event)">
+    <marker *ngIf="point != null" [point]="point" [options]="markerOptions" (clicked)="onClickMarker($event)"></marker>
     <control type="navigation" [options]="controlOpts"></control>
     <control type="overviewmap" [options]="overviewmapOpts"></control>
     <control type="scale" [options]="scaleOpts"></control>
