@@ -1,13 +1,10 @@
 <div class="col-md-8 col-lg-8">
-  <baidu-map *ngIf="options != null" [ngStyle]="{'height':  mapHeight}"
-             [options]="options" (loaded)="onMapLoad($event)"
-             (clicked)="onClickMap($event)">
-    <marker *ngIf="point != null" [point]="point" [options]="markerOptions" (clicked)="onClickMarker($event)"></marker>
-    <control type="navigation" [options]="controlOpts"></control>
-    <control type="overviewmap" [options]="overviewmapOpts"></control>
-    <control type="scale" [options]="scaleOpts"></control>
-    <control type="maptype" [options]="mapTypeOpts"></control>
-  </baidu-map>
+  <baidu-map *ngIf="opts != null" ak="KO1QXsciIMhaFDzuRoBeQG1HQWf9nPBO"
+             [options]="opts" [ngStyle]="{'height':  mapHeight}"
+             [offline]="offlineOpts"
+             (onMapLoaded)="loadMap($event)"
+             (onMarkerClicked)="clickMarker($event)"
+             (onClicked)="clickmap($event)"></baidu-map>
 </div>
 <div class="col-md-4 col-lg-4">
   <h4>车牌号:  {{vehildno}}</h4>
@@ -15,8 +12,8 @@
   <h4>速度:    {{sp}}</h4>
   <h4>位置:    {{ps}}</h4>
   <h4>车辆状态:{{s1 | ss:s2:s3:s4}}</h4>
-  <h4>经度:{{mlat}}</h4>
-  <h4>纬度:{{mlng}}</h4>
+  <h4>纬度:{{mlat}}</h4>
+  <h4>经度:{{mlng}}</h4>
 </div>
 
 

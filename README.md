@@ -2,4 +2,4 @@
 私活
 
 测试URL
-http://localhost:4200/?jsession=ea3c924b-ba36-4528-b0b5-d84785a40af4&vehiIdno=%E7%B2%A4ZGJ23%E6%B8%AF
+http://localhost:4200/?jsession=fc7c6c6b-67be-4a07-b007-4d24bb1f5039&vehiIdno=%E7%B2%A4ZGJ23%E6%B8%AF

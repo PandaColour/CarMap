@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@angular/router": "^5.0.0",
     "@types/bootstrap": "^3.3.36",
-    "angular2-baidu-map": "^4.1.0",
+    "angular2-baidu-map": "^3.0.2",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "jquery": "^3.2.1",

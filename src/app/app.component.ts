@@ -1,15 +1,7 @@
 import {Component} from '@angular/core';
-import {
-  BMapInstance, ControlAnchor, MapOptions, MapTypeControlOptions, MapTypeControlType, MarkerOptions,
-  NavigationControlOptions, NavigationControlType,
-  OverviewMapControlOptions, Point,
-  ScaleControlOptions
-} from 'angular2-baidu-map';
+import {ControlAnchor, NavigationControlType, OfflineOptions} from 'angular2-baidu-map';
 import {DbService} from './db.service';
 import {ActivatedRoute} from '@angular/router';
-import {BMap} from "angular2-baidu-map/dist/src/types/BMap";
-import {BLabel} from "angular2-baidu-map/dist/src/types/Label";
-import {BInfoWindowConstructor, BInfoWindowOptions} from "angular2-baidu-map/dist/src/types/InfoWindow";
 
 @Component({
   selector: 'app-root',
@@ -17,13 +9,8 @@ import {BInfoWindowConstructor, BInfoWindowOptions} from "angular2-baidu-map/dis
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  options: MapOptions;
-  point: Point;
-  controlOpts: NavigationControlOptions;
-  overviewmapOpts: OverviewMapControlOptions;
-  scaleOpts: ScaleControlOptions;
-  mapTypeOpts: MapTypeControlOptions;
-  markerOptions: MarkerOptions;
+  opts: any;
+  offlineOpts: OfflineOptions;
 
   jsession: string;
   vehildno: string;
@@ -39,10 +26,8 @@ export class AppComponent {
   s4: number;
 
   constructor(private dbServer: DbService, private activatedRoute: ActivatedRoute) {
-    this.markerOptions = null;
+
     this.mapHeight = (window.innerHeight - 20) + 'px';
-    this.point = null;
-    this.options = null;
     this.jsession = null;
     this.vehildno = null;
     this.gt = null;
@@ -55,6 +40,8 @@ export class AppComponent {
     this.s3 = 0;
     this.s4 = 0;
 
+    this.opts = null;
+
     this.activatedRoute.queryParams.subscribe((params) => {
       this.jsession = params['jsession'];
       this.vehildno = params['vehiIdno'];
@@ -65,24 +52,6 @@ export class AppComponent {
             this.mlat = parseFloat(data['status'][0]['mlat']);
             this.mlng = parseFloat(data['status'][0]['mlng']);
 
-            this.point = {
-              lat: this.mlat,
-              lng: this.mlng
-            };
-
-            this.markerOptions = {
-              title: this.vehildno
-            };
-
-            this.options = {
-              centerAndZoom: {
-                lat: this.mlat,
-                lng: this.mlng,
-                zoom: 16
-              },
-              enableKeyboard: true
-            };
-
             this.gt = data['status'][0]['gt'];
             this.sp = data['status'][0]['sp'];
             this.ps = data['status'][0]['ps'];
@@ -90,38 +59,50 @@ export class AppComponent {
             this.s2 = data['status'][0]['s2'];
             this.s3 = data['status'][0]['s3'];
             this.s4 = data['status'][0]['s4'];
+
+            this.opts = {
+              center: {
+                longitude: this.mlng,
+                latitude: this.mlat
+              },
+              zoom: 17,
+              markers: [{
+                longitude: this.mlng,
+                latitude: this.mlat,
+                title: '车牌',
+                content: this.vehildno,
+                enableDragging: true,
+                autoDisplayInfoWindow: true
+              }],
+              geolocationCtrl: {
+                anchor: ControlAnchor.BMAP_ANCHOR_BOTTOM_RIGHT
+              },
+              scaleCtrl: {
+                anchor: ControlAnchor.BMAP_ANCHOR_BOTTOM_LEFT
+              },
+              overviewCtrl: {
+                isOpen: true
+              },
+              navCtrl: {
+                type: NavigationControlType.BMAP_NAVIGATION_CONTROL_LARGE
+              }
+            };
+
+            this.offlineOpts = {
+              retryInterval: 5000,
+              txt: 'NO-NETWORK'
+            };
           }
         });
     });
-
-    this.controlOpts = {
-      anchor: ControlAnchor.BMAP_ANCHOR_TOP_LEFT,
-      type: NavigationControlType.BMAP_NAVIGATION_CONTROL_LARGE
-    };
-
-    this.overviewmapOpts = {
-      anchor: ControlAnchor.BMAP_ANCHOR_BOTTOM_RIGHT,
-      isOpen: true
-    };
-
-    this.scaleOpts = {
-      anchor: ControlAnchor.BMAP_ANCHOR_BOTTOM_LEFT
-    };
-
-    this.mapTypeOpts = {
-      type: MapTypeControlType.BMAP_MAPTYPE_CONTROL_HORIZONTAL
-    };
   }
 
-  public onMapLoad(map: BMapInstance) {
-
-
+  loadMap(map: any) {
   }
 
-  public onClickMarker(e: any) {
+  clickMarker(marker: any) {
   }
 
-  public onClickMap(e: any) {
+  clickmap(e: any) {
   }
-
 }

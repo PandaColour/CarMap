@@ -20,7 +20,7 @@ export const ROUTES: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    BaiduMapModule.forRoot({ak: 'KO1QXsciIMhaFDzuRoBeQG1HQWf9nPBO'}),
+    BaiduMapModule,
     RouterModule.forRoot(ROUTES)
   ],
   providers: [DbService],
