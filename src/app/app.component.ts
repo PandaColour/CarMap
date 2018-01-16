@@ -46,55 +46,88 @@ export class AppComponent {
       this.jsession = params['jsession'];
       this.vehildno = params['vehiIdno'];
 
-      this.dbServer.getDeviceStatus(this.jsession, this.vehildno)
-        .subscribe((data) => {
-          if (data['result'] === 0) {
-            this.mlat = parseFloat(data['status'][0]['mlat']);
-            this.mlng = parseFloat(data['status'][0]['mlng']);
+      if (this.jsession === null) {
+        this.jsession = localStorage.getItem('jsession');
+      }
 
-            this.gt = data['status'][0]['gt'];
-            this.sp = data['status'][0]['sp'];
-            this.ps = data['status'][0]['ps'];
-            this.s1 = data['status'][0]['s1'];
-            this.s2 = data['status'][0]['s2'];
-            this.s3 = data['status'][0]['s3'];
-            this.s4 = data['status'][0]['s4'];
-
-            this.opts = {
-              center: {
-                longitude: this.mlng,
-                latitude: this.mlat
-              },
-              zoom: 17,
-              markers: [{
-                longitude: this.mlng,
-                latitude: this.mlat,
-                title: '车牌',
-                content: this.vehildno,
-                enableDragging: true,
-                autoDisplayInfoWindow: true
-              }],
-              geolocationCtrl: {
-                anchor: ControlAnchor.BMAP_ANCHOR_BOTTOM_RIGHT
-              },
-              scaleCtrl: {
-                anchor: ControlAnchor.BMAP_ANCHOR_BOTTOM_LEFT
-              },
-              overviewCtrl: {
-                isOpen: true
-              },
-              navCtrl: {
-                type: NavigationControlType.BMAP_NAVIGATION_CONTROL_LARGE
-              }
-            };
-
-            this.offlineOpts = {
-              retryInterval: 5000,
-              txt: 'NO-NETWORK'
-            };
-          }
-        });
+      if (this.jsession === null) {
+        this.onReLogin();
+      } else {
+        this.dbServer.getDeviceStatus(this.jsession, this.vehildno)
+          .subscribe((data) => {
+            if (data['result'] === 0) {
+              this.onShowMap(data);
+            } else {
+              this.onReLogin();
+            }
+          });
+      }
     });
+  }
+
+  onReLogin() {
+    this.dbServer.login().subscribe((data) => {
+      if (data['result'] === 0) {
+        this.jsession = data['jsession'];
+        localStorage.setItem('jsession', this.jsession);
+        this.dbServer.getDeviceStatus(this.jsession, this.vehildno)
+          .subscribe((data) => {
+            if (data['result'] === 0) {
+              this.onShowMap(data);
+            } else {
+              window.alert('网页错误');
+            }
+          });
+      } else {
+        window.alert('网络不通');
+      }
+    });
+  }
+
+  onShowMap(data: any) {
+    this.mlat = parseFloat(data['status'][0]['mlat']);
+    this.mlng = parseFloat(data['status'][0]['mlng']);
+
+    this.gt = data['status'][0]['gt'];
+    this.sp = data['status'][0]['sp'];
+    this.ps = data['status'][0]['ps'];
+    this.s1 = data['status'][0]['s1'];
+    this.s2 = data['status'][0]['s2'];
+    this.s3 = data['status'][0]['s3'];
+    this.s4 = data['status'][0]['s4'];
+
+    this.opts = {
+      center: {
+        longitude: this.mlng,
+        latitude: this.mlat
+      },
+      zoom: 17,
+      markers: [{
+        longitude: this.mlng,
+        latitude: this.mlat,
+        title: '车牌',
+        content: this.vehildno,
+        enableDragging: true,
+        autoDisplayInfoWindow: true
+      }],
+      geolocationCtrl: {
+        anchor: ControlAnchor.BMAP_ANCHOR_BOTTOM_RIGHT
+      },
+      scaleCtrl: {
+        anchor: ControlAnchor.BMAP_ANCHOR_BOTTOM_LEFT
+      },
+      overviewCtrl: {
+        isOpen: true
+      },
+      navCtrl: {
+        type: NavigationControlType.BMAP_NAVIGATION_CONTROL_LARGE
+      }
+    };
+
+    this.offlineOpts = {
+      retryInterval: 5000,
+      txt: 'NO-NETWORK'
+    };
   }
 
   loadMap(map: any) {

@@ -15,4 +15,9 @@ export class DbService {
     return this.http.get(url);
   }
 
+  public login(): Observable<any> {
+    const url = 'http://139.159.212.154:88/StandardApiAction_login.action?account=jhwladmin&password=000000';
+    return this.http.get(url);
+  }
+
 }
