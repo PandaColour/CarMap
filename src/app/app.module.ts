@@ -7,6 +7,7 @@ import {DbService} from './db.service';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule, Routes} from '@angular/router';
 import { SsPipe } from './pipe/ss.pipe';
+import { SpPipe } from './pipe/sp.pipe';
 
 export const ROUTES: Routes = [
   {path: 's', component: AppComponent}
@@ -15,7 +16,8 @@ export const ROUTES: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    SsPipe
+    SsPipe,
+    SpPipe
   ],
   imports: [
     BrowserModule,

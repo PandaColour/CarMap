@@ -48,6 +48,9 @@ export class AppComponent implements OnInit{
       this.jsession = params['jsession'];
       this.vehildno = params['vehiIdno'];
 
+      if (this.vehildno == null)
+        return;
+
       if (this.jsession == null) {
         this.jsession = localStorage.getItem('jsession');
       }
