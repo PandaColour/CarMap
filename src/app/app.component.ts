@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ControlAnchor, NavigationControlType, OfflineOptions} from 'angular2-baidu-map';
 import {DbService} from './db.service';
 import {ActivatedRoute} from '@angular/router';
@@ -8,7 +8,7 @@ import {ActivatedRoute} from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   opts: any;
   offlineOpts: OfflineOptions;
 
@@ -41,16 +41,18 @@ export class AppComponent {
     this.s4 = 0;
 
     this.opts = null;
+  }
 
+  ngOnInit() {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.jsession = params['jsession'];
       this.vehildno = params['vehiIdno'];
 
-      if (this.jsession === null) {
+      if (this.jsession == null) {
         this.jsession = localStorage.getItem('jsession');
       }
 
-      if (this.jsession === null) {
+      if (this.jsession == null) {
         this.onReLogin();
       } else {
         this.dbServer.getDeviceStatus(this.jsession, this.vehildno)
